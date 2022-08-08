@@ -15,7 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: dummy-env
     steps:
-      - run: echo "$username $token"
+      - name: Echo passer values
+        run: echo "$username $token"
         with:
           username: ${{ inputs.username }}
           token: ${{ secrets.envPAT }}
