@@ -1,0 +1,21 @@
+name: Dummy reusable workflow
+
+on:
+  workflow_call:
+    inputs:
+      dummyInput:
+        required: true
+        type: string
+    secrets:
+      dummySecret:
+        required: true
+
+jobs:
+  dummy_reusable_workflow_job:
+    runs-on: ubuntu-latest
+    environment: dummy-env
+    steps:
+      - run: echo "$username $token"
+        with:
+          username: ${{ inputs.username }}
+          token: ${{ secrets.envPAT }}
