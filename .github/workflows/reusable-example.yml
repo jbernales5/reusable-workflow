@@ -7,17 +7,28 @@ on:
         required: true
         type: string
     secrets:
-      dummySecret:
+      DUMMYSECRET:
         required: true
+    outputs:
+      firstname:
+        description: "The first output string"
+        value: ${{ jobs.dummy_reusable_workflow_job.outputs.output1 }}
+      lastname:
+        description: "The second output string"
+        value: ${{ jobs.dummy_reusable_workflow_job.outputs.output2 }}
 
 jobs:
   dummy_reusable_workflow_job:
     runs-on: ubuntu-latest
     environment: dummy-env
+    outputs:
+      output1: ${{ steps.step.outputs.firstword }}
+      output2: ${{ steps.step.outputs.secondword }}
 
     steps:
-      - name: Echo passer values
-        run: echo "$USERNAME $TOKEN"
+      - id: step
+        name: Echo passer values
+        run: echo "$USERNAME $TOKEN" && echo "::set-output name=firstword::RECEIVED-$USERNAME" && echo "::set-output name=secondword::RECEIVED-$TOKEN"
         env:
           USERNAME: ${{ inputs.dummyInput }}
-          TOKEN: ${{ secrets.dummySecret }}
+          TOKEN: ${{ secrets.DUMMYSECRET }}
