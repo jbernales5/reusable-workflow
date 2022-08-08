@@ -14,9 +14,10 @@ jobs:
   dummy_reusable_workflow_job:
     runs-on: ubuntu-latest
     environment: dummy-env
+
     steps:
       - name: Echo passer values
-        run: echo "$username $token"
-        with:
-          username: ${{ inputs.username }}
-          token: ${{ secrets.envPAT }}
+        run: echo "$USERNAME $TOKEN"
+        env:
+          USERNAME: ${{ inputs.dummyInput }}
+          TOKEN: ${{ secrets.dummySecret }}
